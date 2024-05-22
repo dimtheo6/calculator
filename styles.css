@@ -9,39 +9,57 @@ body{
     justify-content: center;
     align-items: center;
     margin-bottom: auto;
+    min-width: 250px;
     margin-top: 200px;
 }
 
 .border{
+    display: flex;
+    flex-direction: column;
     border: 1px solid black;
-    padding:5px
+    background-color: rgb(65, 63, 63);
+    padding:5px;
+    align-items: center;
 }
+
+.input{
+    display: flex;
+    margin: 10px;   
+   
+}
+
 .numbers{
     max-width: 160px;
 }
-.input{
-    display: flex;
-    margin: 10px;
-    gap: 30px;
-    
-}
+
 .operators{
     display: flex;
     flex-direction: column;
-    gap: 5px;
+   
 }
-.operator{
-    width: 50px;
-    height: 30px;
+
+.operator,
+.equals{
+    background-color: rgb(233, 151, 0);
 }
-.number{
+
+#zero{
+    width: 105px
+}
+
+.number,
+.operator,
+.equals{
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
     width:50px;
     height: 50px;
 }
 
 .display{
-    width:285px;
-    border: 1px solid black;
+    width:200px;
+    border: 1px solid dark;
+    background-color: lightgray;
     text-align: right;
     padding:10px;
 }
