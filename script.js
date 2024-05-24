@@ -8,6 +8,9 @@ const backSpace = document.querySelector('#backSpace');
 
 let operator;
 let numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '/', '*'];
+let operatorSet = false;
+
+
 display.textContent = 0;
 function add(a, b) {
     return Math.round((a + b) * 100) / 100;
@@ -62,27 +65,24 @@ operators.forEach(key => {
         const currentDisplay = display.textContent;
         const lastChar = currentDisplay[currentDisplay.length - 1];
 
-        // Check if the last character is an operator
-        if (["+", "-", "*", "/"].includes(lastChar)) {
-            // If it is, replace the operator
-            display.textContent = currentDisplay.slice(0, -1) + key.textContent;
-            // make it so it only accepts one operator
-        } else {
-            // Otherwise, add the operator to the display
+        if (!operatorSet) {
+            if (!["+", "-", "*", "/"].includes(lastChar)) {
+                display.textContent += key.textContent;
+                operator = key.textContent;
+                operatorSet = true;
+            }
+        } else if (operatorSet && operator === '-' && display.textContent.length === 1) {
             display.textContent += key.textContent;
         }
-
-
     })
 })
 
 // onClick event for the decimal button
 decimal.addEventListener('click', e => {
     const key = e.target;
+    const currentDisplay = display.textContent.split(/[+\-*/]/).pop(); // Check current number segment
 
-    if (display.textContent.includes('.')) {
-        display.textContent = display.textContent;
-    } else {
+    if (!currentDisplay.includes('.')) {
         display.textContent += key.textContent;
     }
 })
@@ -108,12 +108,17 @@ equal.addEventListener('click', function () {
         // updates the display to the result
         display.textContent = operate(a, b);
     }
+    operatorSet = false;  // Reset operator flag after calculation
 });
 
 backSpace.addEventListener('click', function () {
     display.textContent = display.textContent.slice(0, -1);
     if (display.textContent === "") {
         display.textContent = 0;
+    }
+
+    if (["+", "-", "*", "/"].includes(lastChar)) {
+        operatorSet = false;  // Reset operator flag if an operator was removed
     }
 })
 
